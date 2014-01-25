@@ -1,26 +1,54 @@
 package com.example.page;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Spinner;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.provider.MediaStore;
+
 
 import java.sql.Array;
 import java.util.ArrayList;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
+import java.io.*;
+import java.lang.Object;
+import android.os.Environment;
+
+
 
 /**
  * Created by Elie on 1/24/14.
  */
-public class Upload extends  MainActivity {
+public class Upload extends Activity implements View.OnClickListener {
 
  public Spinner spClasses;
+ ImageView iv;
+ Button btnPic;
+ ImageButton ib;
+ Bitmap bmp;
+ Intent i;
+ final static int cameraData = 0;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.upload);
+
+        initialize();
+        InputStream is = getResources().openRawResource(R.drawable.ic_launcher);
+        bmp = BitmapFactory.decodeStream(is);
 
         Spinner spMajor;
 
@@ -85,6 +113,50 @@ public class Upload extends  MainActivity {
 
     }
 
+    private void initialize() {
+        iv = (ImageView) findViewById(R.id.imgView);
+        ib = (ImageButton) findViewById(R.id.ib);
+        btnPic = (Button) findViewById(R.id.btnPic);
+        btnPic.setOnClickListener(this);
+        ib.setOnClickListener(this);
+    }
 
 
+    @Override
+    public void onClick(View view) {
+        switch(view.getId()){
+            case R.id.ib:
+                i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(i,cameraData);
+                break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==RESULT_OK){
+            Bundle extras = data.getExtras();
+            bmp = (Bitmap) extras.get("data");
+
+           /* ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+            bmp.compress(Bitmap.CompressFormat.JPEG, 40, bytes);
+
+//you can create a new file name "test.jpg" in sdcard folder.
+            File f = new File(Environment.getExternalStorageDirectory()
+                    + File.separator + "test.jpg");
+
+            f.createNewFile();
+
+//write the bytes in file
+            FileOutputStream fo = new FileOutputStream(f);
+            fo.write(bytes.toByteArray());
+
+// remember close de FileOutput
+            fo.close();*/
+
+            iv.setImageBitmap(bmp);
+
+        }
+    }
 }
