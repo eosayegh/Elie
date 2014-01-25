@@ -1,0 +1,38 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    tools:ignore="MergeRootFrame" >
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center">
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="239dp"
+            android:text="Search"
+            android:id="@+id/btnSearch"
+            android:layout_gravity="center|bottom|left|right|top"
+            android:textSize="50dp"
+            android:textColor="#ffe3f3"
+            android:background="#370309"
+            android:onClick="goSearch"/>
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:text="Upload"
+            android:id="@+id/btnUpload"
+            android:layout_gravity="center_horizontal"
+            android:textSize="50dp"
+            android:textColor="#fbfff1"
+            android:background="#370309"
+            android:onClick="goUpload"/>
+
+    </LinearLayout>
+</FrameLayout>
